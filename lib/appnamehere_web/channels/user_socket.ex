@@ -18,7 +18,7 @@ defmodule AppnamehereWeb.UserSocket do
   # performing token verification on connect.
   @impl true
   def connect(%{"auth_token" => auth_token}, socket, _connect_info) do
-    case Guardian.decode_and_verify(auth_token, %{}, secret: "jwtsecret")|>IO.inspect do
+    case Appnamehere.Guardian.decode_and_verify(auth_token, %{}, secret: "jwtsecret")|>IO.inspect do
       { :ok, claims } -> {:ok, assign(socket, :user_id, claims["userId"])}
       { :error, reason } -> {:error, reason}
       nil -> {:error, "Unauthorized"}

@@ -55,6 +55,8 @@ config :logger, level: :info
 import_config "prod.secret.exs"
 
 
+
 config :appnamehere, Appnamehere.Guardian,
   issuer: "appnamehere",
-  secret_key: "GV1drlAGmlvaKQdj7CXGoKbANlk0tNdyaUd/F8kHgRtePnHgTdNp/CfBX7KwQUOs"
+  secret_key: "jwtsecret",
+  allowed_algos: ["HS256"] # optional

@@ -7,7 +7,7 @@ defmodule AppnamehereWeb.Router do
   end
 
   pipeline :auth do
-    plug Mercury.Auth.Pipeline
+    plug Appnamehere.Auth.Pipeline
   end
 
   pipeline :ensure_auth do
@@ -15,7 +15,7 @@ defmodule AppnamehereWeb.Router do
   end
 
   pipeline :graphql do
-    plug MercuryWeb.Context
+    plug AppnamehereWeb.Context
   end
 
   scope "/api", AppnamehereWeb do
@@ -26,8 +26,16 @@ defmodule AppnamehereWeb.Router do
   end
 
   scope "/api", AppnamehereWeb do
+    # pipe_through [:api]
     pipe_through [:api, :auth, :ensure_auth]
     # get "/blog/post", PostController, :index
+
+    get "/account/user/:space/session/:session_id", UserController, :session
+    get "/account/user/:space", UserController, :index
+  end
+
+  scope "/api", AppnamehereWeb do
+    pipe_through [:api, :auth, :ensure_auth]
 
     get "/text/generate/:language/:type", TextController, :generate
   end
