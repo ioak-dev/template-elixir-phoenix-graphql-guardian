@@ -54,9 +54,10 @@ config :logger, level: :info
 # and configuration from environment variables.
 import_config "prod.secret.exs"
 
-
-
 config :appnamehere, Appnamehere.Guardian,
   issuer: "appnamehere",
   secret_key: "jwtsecret",
   allowed_algos: ["HS256"] # optional
+
+  config :appnamehere,
+  oneauth_api_url: "https://oneauth-service.herokuapp.com"

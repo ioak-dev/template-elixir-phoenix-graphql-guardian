@@ -15,7 +15,7 @@ defmodule AppnamehereWeb.UserController do
   end
 
   def session(conn, %{"space" => space, "session_id" => session_id}) do
-    case HTTPoison.get!("http://127.0.0.1:8020/auth/#{space}/session/#{session_id}") do
+    case HTTPoison.get!("#{Application.get_env(:appnamehere, :oneauth_api_url)}/auth/#{space}/session/#{session_id}") do
       %HTTPoison.Response{status_code: 200, body: body} -> 
         user_from_source = body |> Poison.decode!
         user_params = %{

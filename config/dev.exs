@@ -58,3 +58,6 @@ config :appnamehere, Appnamehere.Guardian,
   issuer: "appnamehere",
   secret_key: "jwtsecret",
   allowed_algos: ["HS256"] # optional
+
+config :appnamehere,
+  oneauth_api_url: "http://127.0.0.1:8020"
