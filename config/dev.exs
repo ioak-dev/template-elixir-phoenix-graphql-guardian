@@ -4,7 +4,6 @@ use Mix.Config
 config :appnamehere, Appnamehere.Repo,
   url: "postgres://hdfivydl:oMINPAk7kXZ9v-qJFXP2uZbCSEum2SlQ@ruby.db.elephantsql.com:5432/hdfivydl",
   show_sensitive_data_on_connection_error: true,
-  ssl: true,
   pool_size: 2
 
 # For development, we disable any cache and enable
