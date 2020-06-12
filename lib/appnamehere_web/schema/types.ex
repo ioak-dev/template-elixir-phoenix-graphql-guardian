@@ -1,0 +1,7 @@
+defmodule AppnamehereWeb.Schema.Types do
+    use Absinthe.Schema.Notation
+
+    alias AppnamehereWeb.Schema.Types
+
+    import_types(Types.UserType)
+end

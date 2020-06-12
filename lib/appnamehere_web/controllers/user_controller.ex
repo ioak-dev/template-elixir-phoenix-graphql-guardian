@@ -4,11 +4,13 @@ defmodule AppnamehereWeb.UserController do
 
   alias Appnamehere.Accounts
   alias Appnamehere.Accounts.User
+  alias Appnamehere.Database
 
   action_fallback AppnamehereWeb.FallbackController
 
-  def index(conn, _params) do
-    users = Accounts.list_users()
+  def index(conn, %{"space" => space}) do
+    # Database.create_schema("appnamehere_210") |> IO.inspect
+    users = Accounts.list_users(space)
     render(conn, "index.json", users: users)
   end
 
@@ -24,39 +26,18 @@ defmodule AppnamehereWeb.UserController do
           type: user_from_source["type"]
         }
 
-        case Accounts.get_user_by_user_id!(user_from_source["userId"]) do 
+        case Accounts.get_user_by_user_id!(space, user_from_source["userId"]) do 
           %Accounts.User{} = user ->
-            {:ok, updated_user} = Accounts.update_user(user, user_params)
+            {:ok, updated_user} = Accounts.update_user(space, user, user_params)
             render(conn, "session.json", %{user: updated_user, token: user_from_source["token"]})
           _ ->
-            Accounts.create_user(user_params)
+            {:ok, created_user} = Accounts.create_user(space, user_params)
+            render(conn, "session.json", %{user: created_user, token: user_from_source["token"]})
         end
       %HTTPoison.Response{status_code: 404, body: body} ->
         send_resp(conn, :not_found, body)
-      %HTTPoison.Error{} -> IO.puts("Error")
+      %HTTPoison.Error{} -> send_resp(conn, :internal_server_error, "unknown error")
       _ -> send_resp(conn, :internal_server_error, "unknown error")
-    end
-  end
-
-  def create(conn, %{"user" => user_params}) do
-    with {:ok, %User{} = user} <- Accounts.create_user(user_params) do
-      conn
-      |> put_status(:created)
-      |> put_resp_header("location", Routes.user_path(conn, :show, user))
-      |> render("show.json", user: user)
-    end
-  end
-
-  def show(conn, %{"id" => id}) do
-    user = Accounts.get_user!(id)
-    render(conn, "show.json", user: user)
-  end
-
-  def update(conn, %{"id" => id, "user" => user_params}) do
-    user = Accounts.get_user!(id)
-
-    with {:ok, %User{} = user} <- Accounts.update_user(user, user_params) do
-      render(conn, "show.json", user: user)
     end
   end
 

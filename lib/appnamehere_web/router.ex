@@ -26,8 +26,8 @@ defmodule AppnamehereWeb.Router do
   end
 
   scope "/api", AppnamehereWeb do
-    # pipe_through [:api]
-    pipe_through [:api, :auth, :ensure_auth]
+    pipe_through [:api]
+    # pipe_through [:api, :auth, :ensure_auth]
     # get "/blog/post", PostController, :index
 
     get "/account/user/:space/session/:session_id", UserController, :session

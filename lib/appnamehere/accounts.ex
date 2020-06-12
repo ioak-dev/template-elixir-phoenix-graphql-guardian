@@ -17,8 +17,8 @@ defmodule Appnamehere.Accounts do
       [%User{}, ...]
 
   """
-  def list_users do
-    Repo.all(User)
+  def list_users(space) do
+    Repo.all(User, prefix: "appnamehere_#{space}")
   end
 
   @doc """
@@ -35,9 +35,9 @@ defmodule Appnamehere.Accounts do
       ** (Ecto.NoResultsError)
 
   """
-  def get_user!(id), do: Repo.get!(User, id)
+  def get_user!(space, id), do: Repo.get!(User, id, prefix:  "appnamehere_#{space}")
 
-  def get_user_by_user_id!(user_id), do: Repo.get_by(User, [user_id: user_id])
+  def get_user_by_user_id!(space, user_id), do: Repo.get_by(User, [user_id: user_id], prefix:  "appnamehere_#{space}")
 
   @doc """
   Creates a user.
@@ -51,10 +51,10 @@ defmodule Appnamehere.Accounts do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_user(attrs \\ %{}) do
+  def create_user(space, attrs) do
     %User{}
     |> User.changeset(attrs)
-    |> Repo.insert()
+    |> Repo.insert(prefix: "appnamehere_#{space}")
   end
 
   @doc """
@@ -69,10 +69,10 @@ defmodule Appnamehere.Accounts do
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_user(%User{} = user, attrs) do
+  def update_user(space, %User{} = user, attrs) do
     user
     |> User.changeset(attrs)
-    |> Repo.update()
+    |> Repo.update(prefix: "appnamehere_#{space}")
   end
 
   @doc """

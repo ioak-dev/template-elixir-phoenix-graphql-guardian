@@ -3,36 +3,25 @@ defmodule AppnamehereWeb.Schema do
 
     alias AppnamehereWeb.AccountsResolver
 
-    object :user do
-        field :id, non_null(:id)
-        field :user_id, :string
-        field :first_name, :string
-        field :last_name, :string
-        field :email, :string
-    end
+    import_types(AppnamehereWeb.Schema.Types)
 
     query do
-        field :all_users, non_null(list_of(non_null(:user))) do
+        field :all_users, non_null(list_of(non_null(:user_type))) do
             resolve &AccountsResolver.all_users/3
         end
-        field :user, :user do
+        field :user, :user_type do
             arg :id, non_null(:id)
             resolve &AccountsResolver.user/3
         end
-        field :user_by_user_id, :user do
+        field :user_by_user_id, :user_type do
             arg :user_id, non_null(:id)
             resolve &AccountsResolver.user_by_user_id/3
         end
     end
 
     mutation do
-        field :create_user, :user do
-            arg :user_id, non_null(:string)
-            arg :first_name, non_null(:string)
-            arg :last_name, non_null(:string)
-            arg :email, non_null(:string)
-            arg :type, non_null(:string)
-
+        field :create_user, :user_type do
+            arg :payload, :user_input_type
             resolve &AccountsResolver.create_user/3
         end
     end

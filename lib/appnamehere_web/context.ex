@@ -9,7 +9,7 @@ defmodule AppnamehereWeb.Context do
     end
 
     def call(conn, _) do
-       context = build_context(conn)
+       context = build_context(conn) |> IO.inspect
        Absinthe.Plug.put_options(conn, context: context)
     end
 
