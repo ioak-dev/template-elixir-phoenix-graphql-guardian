@@ -37,4 +37,29 @@ defmodule AppnamehereWeb.BlogResolver do
             end
         end
     end
+
+    def comments(_root, args, %{context: %{space: space}}) do
+        case space do
+            nil -> {:error, "Space is missing"}
+            _-> 
+            try do
+                comments = Blog.get_comments_by_post(space, args.post_id)
+                {:ok, comments}
+            rescue
+                Ecto.NoResultsError -> {:ok, nil}
+            end
+        end
+    end
+
+    def create_comment(_root, args, %{context: %{space: space, user: user}}) do
+        case space do
+            nil -> {:error, "Space is missing"}
+            _-> 
+            args.payload |> Map.merge(%{user_id: user["userId"]})
+            case Blog.create_comment(space, args.payload |> Map.merge(%{user_id: "7"})) do
+                {:ok, comment} -> {:ok, comment}
+                _error -> {:error, "error creating comment"}
+            end
+        end
+    end
 end

@@ -25,6 +25,10 @@ defmodule AppnamehereWeb.Schema do
             arg :id, non_null(:id)
             resolve &BlogResolver.post/3
         end
+        field :comments, list_of(:comment) do
+            arg :post_id, non_null(:id)
+            resolve &BlogResolver.comments/3
+        end
     end
 
     mutation do
@@ -35,6 +39,10 @@ defmodule AppnamehereWeb.Schema do
         field :create_post, :post do
             arg :payload, :post_input_type
             resolve &BlogResolver.create_post/3
+        end
+        field :create_comment, :comment do
+            arg :payload, :comment_input_type
+            resolve &BlogResolver.create_comment/3
         end
     end
 end

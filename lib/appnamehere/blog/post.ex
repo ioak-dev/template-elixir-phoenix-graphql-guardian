@@ -7,6 +7,7 @@ defmodule Appnamehere.Blog.Post do
     field :title, :string
     # field :user_id, :id
     belongs_to(:user, Appnamehere.Accounts.User)
+    has_many :comments, Appnamehere.Blog.Comment
 
     timestamps()
   end
