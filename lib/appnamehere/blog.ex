@@ -17,8 +17,8 @@ defmodule Appnamehere.Blog do
       [%Post{}, ...]
 
   """
-  def list_posts do
-    Repo.all(Post)
+  def list_posts(space) do
+    Repo.all(Post, prefix: "appnamehere_#{space}")
   end
 
   @doc """
@@ -35,7 +35,7 @@ defmodule Appnamehere.Blog do
       ** (Ecto.NoResultsError)
 
   """
-  def get_post!(id), do: Repo.get!(Post, id)
+  def get_post!(space, id), do: Repo.get!(Post, id, prefix:  "appnamehere_#{space}")
 
   @doc """
   Creates a post.
@@ -49,10 +49,12 @@ defmodule Appnamehere.Blog do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_post(attrs \\ %{}) do
+  def create_post(space, attrs) do
+    IO.puts("*************")
     %Post{}
     |> Post.changeset(attrs)
-    |> Repo.insert()
+    |> Repo.insert(prefix: "appnamehere_#{space}")
+    |> IO.inspect
   end
 
   @doc """

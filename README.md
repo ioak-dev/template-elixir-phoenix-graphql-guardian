@@ -18,3 +18,7 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 - Docs: https://hexdocs.pm/phoenix
 - Forum: https://elixirforum.com/c/phoenix-forum
 - Source: https://github.com/phoenixframework/phoenix
+
+## Graph QL Query example
+
+`{ allUsers { id firstName posts { description } } allPosts { description id user { id firstName lastName email userId } } user(id: "7") { email } userByUserId(userId: "5ec7756eeac57601b53acb51") { id } post(id: "4") { description } }`

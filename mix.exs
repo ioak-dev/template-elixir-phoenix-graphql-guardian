@@ -49,7 +49,8 @@ defmodule Appnamehere.MixProject do
       {:cors_plug, "~> 2.0.2"},
       {:absinthe, "~> 1.5"},
       {:absinthe_plug, "~> 1.5"},
-      {:plug, "~> 1.10"}
+      {:plug, "~> 1.10"},
+      {:dataloader, "~> 1.0.0"}
     ]
   end
 

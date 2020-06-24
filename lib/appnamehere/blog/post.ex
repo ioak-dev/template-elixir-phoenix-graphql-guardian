@@ -5,7 +5,8 @@ defmodule Appnamehere.Blog.Post do
   schema "posts" do
     field :description, :string
     field :title, :string
-    field :user_id, :id
+    # field :user_id, :id
+    belongs_to(:user, Appnamehere.Accounts.User)
 
     timestamps()
   end

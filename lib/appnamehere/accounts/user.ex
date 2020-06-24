@@ -8,6 +8,7 @@ defmodule Appnamehere.Accounts.User do
     field :last_name, :string
     field :type, :string
     field :user_id, :string
+    has_many :posts, Appnamehere.Blog.Post
 
     timestamps()
   end

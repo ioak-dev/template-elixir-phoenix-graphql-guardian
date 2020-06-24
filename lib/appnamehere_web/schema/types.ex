@@ -4,4 +4,5 @@ defmodule AppnamehereWeb.Schema.Types do
     alias AppnamehereWeb.Schema.Types
 
     import_types(Types.UserType)
+    import_types(Types.PostType)
 end
