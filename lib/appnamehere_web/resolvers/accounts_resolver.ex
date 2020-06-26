@@ -13,7 +13,7 @@ defmodule AppnamehereWeb.AccountsResolver do
             case space do
                 nil -> {:error, "Space is missing"}
                 _-> 
-                    user = Accounts.get_user!(210, args.id) |> IO.inspect
+                    user = Accounts.get_user!(space, args.id)
                     {:ok, user}
             end
         rescue
@@ -25,7 +25,7 @@ defmodule AppnamehereWeb.AccountsResolver do
         case space do
             nil -> {:error, "Space is missing"}
             _-> 
-                user = Accounts.get_user_by_user_id!(210, args.user_id)
+                user = Accounts.get_user_by_user_id!(space, args.user_id)
                 {:ok, user}
         end
     end
@@ -34,7 +34,7 @@ defmodule AppnamehereWeb.AccountsResolver do
         case space do
             nil -> {:error, "Space is missing"}
             _-> 
-                case Accounts.create_user(210, args.payload) do
+                case Accounts.create_user(space, args.payload) do
                     {:ok, user} -> {:ok, user}
                     _error -> {:error, "error creating user"}
                 end

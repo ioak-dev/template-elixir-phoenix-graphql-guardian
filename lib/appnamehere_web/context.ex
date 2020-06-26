@@ -9,7 +9,7 @@ defmodule AppnamehereWeb.Context do
     end
 
     def call(conn, _) do
-       context = build_context(conn) |> IO.inspect
+       context = build_context(conn)
        Absinthe.Plug.put_options(conn, context: context)
     end
 
@@ -17,7 +17,6 @@ defmodule AppnamehereWeb.Context do
         [space | jwt_token] = conn
             |> get_req_header("authorization")
             |> deconstruct_auth_text
-            |> IO.inspect
         case jwt_token |> authorize do
             {:ok, claims} -> %{user: claims, space: space}
             {:error, _} -> %{user: nil, space: space}

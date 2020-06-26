@@ -1,10 +1,10 @@
 defmodule AppnamehereWeb.UserChannel do
   use AppnamehereWeb, :channel
 
+  # intercept ["new_message"]
+
   def join("user:" <> id, _payload, socket) do
-    socket.assigns[:user_id]
-    IO.inspect(id)
-    if socket.assigns[:user_id] == id do
+    if socket.assigns[:user]["id"] == String.to_integer(id) do
       {:ok, socket}
     else
       {:error, %{reason: "unauthorized"}}
@@ -12,8 +12,18 @@ defmodule AppnamehereWeb.UserChannel do
   end
 
   def handle_in("new_message", payload, socket) do
+    IO.puts(":::::::::::::::::::::::::::::")
+    AppnamehereWeb.Endpoint.broadcast_from!(self(), "user:" <> payload["to"], "new_message", payload)
     broadcast socket, "new_message", payload
-    {:reply, {:ok, %{response: payload}}, socket}
+    {:noreply, socket}
+  end
+
+  def handle_out("new_message", payload, socket) do
+    IO.puts("[[[[[[[[[[[[[[[]]]]]]]]]]]]]]]")
+    payload |> IO.inspect
+    # socket.assigns[:user]["id"] |> IO.inspect
+    # broadcast socket, "new_message", payload
+    # {:reply, {:ok, %{response: payload}}, socket}
   end
 
   # Channels can be used in a request/response fashion

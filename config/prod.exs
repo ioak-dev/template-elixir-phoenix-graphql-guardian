@@ -11,7 +11,7 @@ use Mix.Config
 # before starting your production server.
 config :appnamehere, AppnamehereWeb.Endpoint,
   url: [scheme: "https", host: "appnamehere-service.herokuapp.com", port: 443],
-  check_origin: ["https://mercury.ioak.org"]
+  check_origin: ["https://appnamehere.ioak.org"]
   # cache_static_manifest: "priv/static/cache_manifest.json"
 
 # Do not print debug messages in production

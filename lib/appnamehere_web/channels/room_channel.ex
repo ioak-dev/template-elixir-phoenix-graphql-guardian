@@ -6,9 +6,6 @@ defmodule AppnamehereWeb.RoomChannel do
   end
 
   def join("room:" <> roomname, payload, socket) do
-    socket.assigns[:user_id] |> IO.inspect
-    IO.inspect(roomname)
-    payload |> IO.inspect
     if socket.assigns[:user_id] == roomname do
       {:ok, socket}
     else

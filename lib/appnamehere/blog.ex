@@ -151,7 +151,6 @@ defmodule Appnamehere.Blog do
 
   """
   def create_comment(space, attrs) do
-    attrs |> IO.inspect
     %Comment{}
     |> Comment.changeset(attrs)
     |> Repo.insert(prefix: "appnamehere_#{space}")
