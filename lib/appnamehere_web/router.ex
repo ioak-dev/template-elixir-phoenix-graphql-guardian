@@ -32,6 +32,7 @@ defmodule AppnamehereWeb.Router do
 
     get "/account/user/:space/session/:session_id", UserController, :session
     get "/account/user/:space", UserController, :index
+    get "/database/:space", DatabaseController, :index
   end
 
   scope "/api", AppnamehereWeb do
